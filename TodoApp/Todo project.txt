@@ -1,0 +1,238 @@
+Create a new python package file and name it TodoAPP it will
+create __init__.py package file.
+2. TodoApp ---> new python file.
+3. Create a new python package for routers then --> auth.py --> todos.py copy of main file.
+4. change the main file structure to include the auth.py and todos.py files.
+
+(fastapienv) PS C:\Users\L E N O V O\fastapi> cd TodoApp
+(fastapienv) PS C:\Users\L E N O V O\fastapi\TodoApp>
+
+create TodoApp/database.py
+create TodoApp/models.py
+create TodoApp/main.py
+
+** Changing the path for the sqlite3 in c drive.
+=================================================
+
+To open System Properties on Windows 10, you can follow these steps:
+
+### Method 1: Using the Search Bar
+
+1. **Click on the Start Menu** (Windows icon) or press the **Windows key** on your keyboard.
+2. Type **"Control Panel"** and press **Enter**.
+3. In the Control Panel, select **"System and Security"**.
+4. Click on **"System"**.
+5. On the left side, click on **"Advanced system settings"**.
+
+### Method 2: Using Run Command
+
+1. Press **Windows + R** on your keyboard to open the Run dialog.
+2. Type **`sysdm.cpl`** and press **Enter**.
+3. This will directly open the System Properties window.
+
+### Method 3: Using Right-click on This PC
+
+1. Right-click on **This PC** (either on your desktop or in File Explorer).
+2. Select **"Properties"**.
+3. Click on **"Advanced system settings"** on the left side.
+
+### What You Can Do in System Properties
+
+In the System Properties window, you can:
+- View system information.
+- Change computer name.
+- Adjust performance settings.
+- Set environment variables.
+- Manage hardware profiles.
+
+If you need further assistance, feel free to ask!
+
+open sys properties then env vars then change the path double-click  on new one in it paste
+the sql lite3 path c:/sqlite3.
+
+Then open powershell terminal and :
+PS C:\Users\L E N O V O> sqlite3
+SQLite version 3.47.2 2024-12-07 20:39:59
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite>
+
+
+open pycharm terminal on TodoApp:
+ =================================
+
+ (fastapienv) PS C:\Users\L E N O V O\fastapi\TodoApp> sqlite3 todos.db
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite>
+- Then type .schema it will appear all the data in your table
+
+sqlite> .schema
+CREATE TABLE todos (
+        id INTEGER NOT NULL,
+        title VARCHAR,
+        description VARCHAR,
+        priority INTEGER,
+        complete BOOLEAN,
+        PRIMARY KEY (id)
+);
+CREATE INDEX ix_todos_id ON todos (id);
+sqlite>
+
+
+
+(fastapienv) PS C:\Users\L E N O V O\fastapi\TodoApp> sqlite3 todos.db
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> INSERT INTO todos (title, description, priority, complete) VALUES ('Go to the store', 'p
+ick up eggs', 5, FALSE);
+sqlite> SELECT * FROM todos;
+1|Go to the store|pick up eggs|5|0
+sqlite>
+
+
+sqlite> INSERT INTO todos (title, description, priority, complete) VALUES ('Go to the store', 'p
+ick up eggs', 5, FALSE);
+sqlite> SELECT * FROM todos;
+1|Go to the store|pick up eggs|5|0
+sqlite> INSERT INTO todos (title, description, priority, complete) VALUES ('Cut the loan', 'Gras
+s getting loong', 3, FALSE);
+sqlite> SELECT * FROM todos;
+1|Go to the store|pick up eggs|5|0
+2|Cut the loan|Grass getting loong|3|0
+sqlite>
+sqlite> INSERT INTO todos (title, description, priority, complete) VALUES ('Feed the dog', 'Gett
+ing hungry', 5, FALSE);
+sqlite> SELECT * FROM todos;
+1|Go to the store|pick up eggs|5|0
+2|Cut the loan|Grass getting loong|3|0
+3|Feed the dog|Getting hungry|5|0
+sqlite>
+sqlite> .mode column
+sqlite> SELECT * FROM todos;
+id  title            description          priority  complete
+--  ---------------  -------------------  --------  --------
+1   Go to the store  pick up eggs         5         0
+2   Cut the loan     Grass getting loong  3         0
+3   Feed the dog     Getting hungry       5         0
+sqlite>
+
+sqlite> SELECT * FROM todos;
+| id |      title      |     description     | priority | complete |
+|----|-----------------|---------------------|----------|----------|
+| 1  | Go to the store | pick up eggs        | 5        | 0        |
+| 2  | Cut the loan    | Grass getting loong | 3        | 0        |
+| 3  | Feed the dog    | Getting hungry      | 5        | 0        |
+sqlite>
+sqlite> SELECT * FROM todos;
+┌────┬─────────────────┬─────────────────────┬──────────┬──────────┐
+│ id │      title      │     description     │ priority │ complete │
+├────┼─────────────────┼─────────────────────┼──────────┼──────────┤
+│ 1  │ Go to the store │ pick up eggs        │ 5        │ 0        │
+│ 2  │ Cut the loan    │ Grass getting loong │ 3        │ 0        │
+│ 3  │ Feed the dog    │ Getting hungry      │ 5        │ 0        │
+└────┴─────────────────┴─────────────────────┴──────────┴──────────┘
+sqlite>
+sqlite> .mode table
+sqlite> SELECT * FROM todos;
++----+-----------------+---------------------+----------+----------+
+| id |      title      |     description     | priority | complete |
++----+-----------------+---------------------+----------+----------+
+| 1  | Go to the store | pick up eggs        | 5        | 0        |
+| 2  | Cut the loan    | Grass getting loong | 3        | 0        |
+| 3  | Feed the dog    | Getting hungry      | 5        | 0        |
++----+-----------------+---------------------+----------+----------+
+sqlite>
+sqlite> INSERT INTO todos (title, description, priority, complete) VALUES ('New test Element', '
+Getting hungry', 5, FALSE);
+sqlite> SELECT * FROM todos;
++----+------------------+---------------------+----------+----------+
+| id |      title       |     description     | priority | complete |
++----+------------------+---------------------+----------+----------+
+| 1  | Go to the store  | pick up eggs        | 5        | 0        |
+| 2  | Cut the loan     | Grass getting loong | 3        | 0        |
+| 3  | Feed the dog     | Getting hungry      | 5        | 0        |
+| 4  | New test Element | Getting hungry      | 5        | 0        |
++----+------------------+---------------------+----------+----------+
+sqlite>
+Certainly! The `DELETE` statement in SQL is used to remove records from a table. Below is the general syntax and some examples:
+
+### General Syntax
+
+```sql
+DELETE FROM table_name
+WHERE condition;
+```
+
+- **table_name**: The name of the table from which you want to delete records.
+- **condition**: A condition that specifies which records should be deleted. If you omit the `WHERE` clause, all records in the table will be deleted.
+
+### Examples
+
+1. **Delete a Specific Record**:
+   To delete a record with a specific condition (e.g., where the `id` is 1):
+
+   ```sql
+   DELETE FROM traffic
+   WHERE id = 1;
+   ```
+
+2. **Delete Multiple Records**:
+   To delete records that meet a certain condition (e.g., all records where `complete` is `true`):
+
+   ```sql
+   DELETE FROM traffic
+   WHERE complete = true;
+   ```
+
+3. **Delete All Records**:
+   To delete all records from the table (be cautious with this!):
+
+   ```sql
+   DELETE FROM traffic;
+   ```
+
+4. **Delete with a Subquery**:
+   To delete records based on a subquery (e.g., delete all records with a priority lower than the average):
+
+   ```sql
+   DELETE FROM traffic
+   WHERE priority < (SELECT AVG(priority) FROM traffic);
+   ```
+
+### Important Notes
+
+- Always use the `WHERE` clause to specify which records to delete;
+ otherwise, you may unintentionally remove all records from the table.
+- It’s a good practice to back up your data before performing delete operations,
+especially on production databases.
+
+If you have any further questions or need more specific examples, feel free to ask!
+
+
+
+Creating endpoints fetching inside this database?
+====================================================
+section 9: API Request Methods
+111. FastAPI Project: Get All Todos from Database
+
+
+
+
+Example session:
+=====================
+
+$ sqlite3 traffics.db
+SQLite version 3.47.2 2024-12-07 20:39:59
+Enter ".help" for usage hints.
+sqlite> .tables
+zoz
+sqlite> .schema zoz
+CREATE TABLE zoz (id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT, priority INTEGER, complete BOOLEAN);
+sqlite> .mode column
+sqlite> .headers on
+sqlite> SELECT * FROM zoz;
+==============================
+
+

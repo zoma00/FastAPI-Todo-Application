@@ -1,0 +1,36 @@
+from sqlalchemy import create_engine, Column, Integer, String, Boolean
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+# Database setup
+SQLALCHEMY_DATABASE_URL = 'sqlite:///./traffic.db'  # Correct connection string
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={'check_same_thread': False})
+
+LocalSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+# Define the Traffic model
+class Traffic(Base):
+    __tablename__ = 'traffic'  # Table name in the database
+
+    id = Column(Integer, primary_key=True, index=True)  # Primary key
+    title = Column(String)  # Title of the traffic record
+    description = Column(String)  # Description of the traffic record
+    priority = Column(Integer)  # Priority of the traffic record
+    complete = Column(Boolean, default=False)  # Default value for complete
+
+
+# Create the database tables
+Base.metadata.create_all(bind=engine)
+
+# Insert sample data
+session = LocalSession()
+new_traffic = Traffic(
+    title="Traffic Jam",
+    description="Heavy traffic due to road construction.",
+    priority=1,
+    complete=False
+)
+session.add(new_traffic)
+session.commit()
+session.close()

@@ -1,0 +1,58 @@
+1. from server or create server group open register server.
+2. Register server window -> TodoApplicationServer -> toggle button connected now.
+3. Then in connection section :
+Host name: localhost
+port:5432
+Maintenance database:   postgres
+username: postgres
+password: your password zoz3584
+save password : yes
+============================================
+Then you will find your TdoApplication server inside your Servers. open it and start your work.
+1. open login/Group Roles menu and make sure that you have a superuser postgres at the end of the list.
+2. postgres superuser -> right click properties check the privileges,
+and you will see that we can do anything in this database
+3. If you don't have a superuser you can create a new one from:
+Login/Groups Role:
+postgres -> right click -> create Login group role -> privileges set all to True
+
+
+Creating database:
+Right click Databases -> create new database -> The owner is the superuser we have created before.
+open schema -> tables -> toggle at the upper left (Query tool) it open a window for SQL Commands.
+
+
+Put this commands:
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id SERIAL,
+  email varchar(200) DEFAULT NULL,
+  username varchar(45) DEFAULT NULL,
+  first_name varchar(45) DEFAULT NULL,
+  last_name varchar(45) DEFAULT NULL,
+  hashed_password varchar(200) DEFAULT NULL,
+  is_active boolean DEFAULT NULL,
+  role varchar(45) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS todos;
+
+CREATE TABLE todos (
+  id SERIAL,
+  title varchar(200) DEFAULT NULL,
+  description varchar(200) DEFAULT NULL,
+  priority integer  DEFAULT NULL,
+  complete boolean  DEFAULT NULL,
+  owner_id integer  DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+Then play button for execution then refresh the tables to show up two tables ( todos , users)
+
+SELECT * FROM USERS;
+SELECT * FROM TODOS;
+then execute command will show the result at the bottom
